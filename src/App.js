@@ -5,8 +5,8 @@ import './App.css';
 class App extends Component {
   state = {
     persons : [
-      {name: "Sharif Ahmed", age: 31},
-      {name: "Aadil Bin Sharif", age: 1}
+      {id: 1, name: "Sharif Ahmed", age: 31},
+      {id: 3, name: "Aadil Bin Sharif", age: 1}
     ],
     showPersons: false
   }
@@ -20,13 +20,26 @@ class App extends Component {
     }); 
   }
 
-  inputChangeHander = (event) => {
-    this.setState({
-      persons: [
-        {name: "Sharif Ahmed", age: 31},
-        {name: event.target.value, age: 1}
-      ]
-    }); 
+  inputChangeHander = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    let updatedName = event.target.value;
+
+    const person = {...this.state.persons[personIndex]};
+    person.name = updatedName;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons}); 
+  }
+
+  removeHandler = (index) => {
+    const persons = [...this.state.persons];
+    persons.splice(index, 1);
+    this.setState({persons: persons});
   }
 
   togglePersons = () => {
@@ -47,14 +60,15 @@ class App extends Component {
 
     if (this.state.showPersons) {
       persons = <div>
-                  <Person name={this.state.persons[0].name} 
-                          age={this.state.persons[0].age}>
-                    I am a Muslim. I worship Allah alone.
-                  </Person>
-                  <Person name={this.state.persons[1].name} 
-                          age={this.state.persons[1].age}
-                          onInputChange={this.inputChangeHander}
-                          />
+                  {
+                    this.state.persons.map((p, i) => {
+                      return <Person name={p.name} 
+                                     age={p.age}
+                                     key={p.id}
+                                     onInputChange={(event) => this.inputChangeHander(event, p.id)}
+                                     onClickRemove={() => this.removeHandler(i)}/>
+                    })
+                  }
                 </div>
     }
 
