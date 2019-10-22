@@ -7,7 +7,8 @@ class App extends Component {
     persons : [
       {name: "Sharif Ahmed", age: 31},
       {name: "Aadil Bin Sharif", age: 1}
-    ]  
+    ],
+    showPersons: false
   }
 
   switchHandler = (age) => {
@@ -27,6 +28,11 @@ class App extends Component {
       ]
     }); 
   }
+
+  togglePersons = () => {
+    const showPerson = this.state.showPersons;
+    this.setState({showPersons: !showPerson});
+  }
   render() {
     const style = {
       color: '#fff',
@@ -37,16 +43,26 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = <div>
+                  <Person name={this.state.persons[0].name} 
+                          age={this.state.persons[0].age}>
+                    I am a Muslim. I worship Allah alone.
+                  </Person>
+                  <Person name={this.state.persons[1].name} 
+                          age={this.state.persons[1].age}
+                          onInputChange={this.inputChangeHander}
+                          />
+                </div>
+    }
+
     return (
       <div className="App">
         <h1>Assalamu Alaikum</h1>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age}>
-          I am a Muslim. I worship Allah alone.
-        </Person>
-        <Person name={this.state.persons[1].name} 
-                age={this.state.persons[1].age}
-                onInputChange={this.inputChangeHander}
-                />
+        {persons}
+        <button style={style} onClick={this.togglePersons}>Show/Hide</button>
         <button style={style} onClick={() => this.switchHandler(32)}>Switch</button>
         <button style={style} onClick={this.switchHandler.bind(this, 31)}>Switch Back</button>
       </div>
