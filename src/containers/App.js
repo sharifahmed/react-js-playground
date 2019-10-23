@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Person from '../components/Persons/Person/Person';
 import Persons from '../components/Persons/Persons';
+import Buttons from '../components/Buttons/Buttons';
 import './App.css';
 
 class App extends Component {
@@ -73,9 +74,9 @@ class App extends Component {
       <div className="App">
         <h1>Assalamu Alaikum</h1>
         {this.getPersons()}
-        <button style={style} onClick={this.togglePersons}>Show/Hide</button>
-        <button style={style} onClick={() => this.switchHandler(32)}>Switch</button>
-        <button style={style} onClick={this.switchHandler.bind(this, 31)}>Switch Back</button>
+        <Buttons style={style}
+                 togglePersons={this.togglePersons} 
+                 switchHandler={this.switchHandler}/>
       </div>
     );
   }
