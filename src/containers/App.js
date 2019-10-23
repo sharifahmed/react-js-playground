@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
 import './App.css';
 
 class App extends Component {
@@ -46,6 +47,18 @@ class App extends Component {
     const showPerson = this.state.showPersons;
     this.setState({showPersons: !showPerson});
   }
+  
+  getPersons = () => {
+    if (!this.state.showPersons) {
+      return null;
+    }
+    return  <div>
+              <Persons persons={this.state.persons}
+                        inputChangeHander={this.inputChangeHander}
+                        removeHandler={this.removeHandler}/>
+            </div>
+  }
+
   render() {
     const style = {
       color: '#fff',
@@ -56,26 +69,10 @@ class App extends Component {
       cursor: 'pointer'
     }
 
-    let persons = null;
-
-    if (this.state.showPersons) {
-      persons = <div>
-                  {
-                    this.state.persons.map((p, i) => {
-                      return <Person name={p.name} 
-                                     age={p.age}
-                                     key={p.id}
-                                     onInputChange={(event) => this.inputChangeHander(event, p.id)}
-                                     onClickRemove={() => this.removeHandler(i)}/>
-                    })
-                  }
-                </div>
-    }
-
     return (
       <div className="App">
         <h1>Assalamu Alaikum</h1>
-        {persons}
+        {this.getPersons()}
         <button style={style} onClick={this.togglePersons}>Show/Hide</button>
         <button style={style} onClick={() => this.switchHandler(32)}>Switch</button>
         <button style={style} onClick={this.switchHandler.bind(this, 31)}>Switch Back</button>
