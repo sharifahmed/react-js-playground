@@ -5,6 +5,6 @@ import App from './containers/App';
 import App2 from './containers/App2';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App title="Assalamu Alaikum"/>, document.getElementById('root'));
 //ReactDOM.render(<App2/>, document.getElementById('root'));
 registerServiceWorker();

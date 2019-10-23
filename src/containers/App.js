@@ -72,7 +72,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1>Assalamu Alaikum</h1>
+        <h1>{this.props.title}</h1>
         {this.getPersons()}
         <Buttons style={style}
                  togglePersons={this.togglePersons} 
